@@ -3,189 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Taxi Exam Quiz</title>
-
+<title>Quiz Interface</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  margin:0;
-  padding:20px;
-}
+  /* ========== General Styles ========== */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f6fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
 
-.quiz-container {
-  max-width:700px;
-  margin:auto;
-  background:#fff;
-  padding:30px;
-  border-radius:12px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.1);
-}
+  .container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
 
-.top-buttons {
-  display:flex;
-  gap:10px;
-  margin-bottom:20px;
-}
+  h2 {
+    text-align: center;
+    color: #2f3640;
+  }
 
-.set-btn {
-  padding:12px 20px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  color:#fff;
-  background:#2196F3;
-}
+  /* ========== Buttons ========== */
+  .top-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
 
-.set-btn.active {
-  background:#4CAF50;
-}
+  .btn {
+    background-color: #0984e3;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
 
-h2 {
-  font-size:22px;
-  margin-bottom:20px;
-}
+  .btn:hover {
+    background-color: #74b9ff;
+  }
 
-.options {
-  display:flex;
-  flex-direction:column;
-  gap:15px;
-}
+  .back-btn {
+    display: block;
+    margin: 20px auto 0 auto;
+    background: #e17055;
+  }
 
-.option-btn {
-  padding:15px;
-  font-size:16px;
-  border-radius:8px;
-  border:2px solid #4CAF50;
-  background:#fff;
-  cursor:pointer;
-  text-align:left;
-}
+  .back-btn:hover {
+    background: #ff7675;
+  }
 
-.option-btn.correct {
-  background:#4CAF50;
-  color:#fff;
-}
+  /* ========== Quiz Container ========== */
+  .quiz-container {
+    background: #f1f2f6;
+    padding: 20px;
+    border-radius: 8px;
+    min-height: 300px;
+  }
 
-.option-btn.wrong {
-  background:#f44336;
-  color:#fff;
-}
+  .options {
+    background: #dfe6e9;
+    padding: 15px;
+    border-radius: 6px;
+    line-height: 1.6;
+    font-size: 16px;
+    white-space: pre-line;
+    max-height: 500px;
+    overflow-y: auto;
+  }
 
-.feedback {
-  margin-top:20px;
-  font-weight:bold;
-  font-size:18px;
-}
+  .options span {
+    display: block;
+    margin-bottom: 8px;
+  }
 
-.nav-buttons {
-  margin-top:20px;
-  display:flex;
-  gap:10px;
-}
-
-.next-btn, .back-btn {
-  padding:12px 25px;
-  font-size:16px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  color:#fff;
-}
-
-.next-btn {
-  background:#2196F3;
-}
-
-.next-btn:disabled {
-  background:#9E9E9E;
-  cursor:not-allowed;
-}
-
-.back-btn {
-  background:#9E9E9E;
-}
-
-.progress {
-  margin-top:10px;
-  font-size:14px;
-}
+  /* Responsive */
+  @media (max-width: 600px) {
+    .btn {
+      font-size: 14px;
+      padding: 8px 12px;
+    }
+    .options {
+      font-size: 14px;
+    }
+  }
 </style>
 </head>
-
 <body>
 
-<div class="quiz-container">
+<div class="container">
+  <h2>Quiz Interface</h2>
 
-  <!-- TOP QUESTION SET BUTTONS -->
+  <!-- Buttons for different sets -->
   <div class="top-buttons">
-    <button class="set-btn" onclick="loadSet('q44', this)">44 Que</button>
-    <button class="set-btn" onclick="loadSet('q50', this)">50 Que</button>
-    <button class="set-btn" onclick="loadSet('extra', this)">Extra Que</button>
-    <button class="set-btn" onclick="showReadOnlyAnswers()">Read-Only Answers</button>
+    <button class="btn" onclick="loadSet('q44')">Set 44 Que</button>
+    <button class="btn" onclick="loadSet('q50')">Set 50 Que</button>
+    <button class="btn" onclick="loadSet('extra')">Extra Que</button>
+    <button class="btn" onclick="showReadOnlyAnswers()">Read-Only Answers</button>
   </div>
 
-  <h2 id="question">Select a question set</h2>
-  <div class="options" id="options"></div>
-  <div class="feedback" id="feedback"></div>
-
-  <div class="nav-buttons" style="display:none;">
-    <button class="back-btn" onclick="prevQuestion()">Back</button>
-    <button class="next-btn" id="nextBtn" onclick="nextQuestion()" disabled>Next</button>
+  <!-- Quiz content will be displayed here -->
+  <div class="quiz-container">
+    <p>Select a set or click "Read-Only Answers" to view all answers.</p>
   </div>
-
-  <div class="progress" id="progress"></div>
 </div>
 
 <script>
-// ---------------- QUESTION SETS ----------------
-
-  function showReadOnlyAnswers() {
-  const answers = [
-    "51) 350 euro",
-    "52) Liikeenne valvoja",
-    "53) Jos Paikka ei turvallinen pysahtymiselle etsin toisen paikan koska vastuullasi on asiakkaan turvallinen ajoneuvosta poistuminen",
-    "54) Kun olet mennossa kadun toiselle puolella",
-    "55) tule nousta autosta ja kysyt asiakkaalta mitenvoit autta",
-    "56) neuvoun asiakasta soittamaan kelan palvelunumeroon",
-    "57) kysyn Miten voin autta ja kerron missa suunassa ajoneuvo on ja tarvitseeko hanapua",
-    "58) pyydan lapselta hänen vanhemmin puhellinumero",
-    "60) soitan tyontajalle ja kerron tilanteesta",
-    "61) koiralla on tunnistevaljaat.",
-    "62) Hartiavyolla, lantiovyolla Ja jalkavyolla",
-    "63) pimealla autossa tulisi pita sisavalo paalla kommunikointi tilantssa",
-    "64) tillaan asiakkalle toisen taksia, jossa asiakasta on turvallisempi kuljettaa.",
-    "65) Sinun tullee puuttua asian ja keskustella asiasta osa puolten kansa ja ilmoitta asiasta oppilaitokseen.",
-    "66) sinun tulee odotta asiakkan kasnsa, kunnes avustaja saapuu paikalle.",
-    "67) sinun tulee kieltaytymaan kuljettamista.",
-    "68) pyydat jotakin soittamaan huoltajalleen ja pyytämään tata tulemaan lasten vastaan kerrostalon pihalle.",
-    "69) kylla saa, Jos kuljettaja houlehti asiakkaan sahkomopon oikeaoppisesti kiinnittamisesta ajoneuvoon.",
-    "70) sinun tulee poistua autosta ja autta matkustajaa tarvittaessa.",
-    "71) Rauhoitella hanta puhumalla hanelle rauhallisesti ja ystavallisesti.",
-    "72) huolehdu, etta………..aikana",
-    "73) teysaytat autosi…….asiakkan kyytin",
-    "74) Aina jos…….asiakkan",
-    "75) ………varmistanut",
-    "76) kuljettaja…….puheella",
-    "Imp. Bus – B",
-    "Cycle and humans",
-    "Extreme cold weather outside"
-  ];
-
-  const container = document.querySelector('.quiz-container');
-  
-  container.innerHTML = `
-    <h2>Read-Only Answers</h2>
-    <div class="options" style="white-space: pre-line;">${answers.join('\n')}</div>
-    <button class="set-btn" onclick="location.reload()">Back</button>
-  `;
-}
-
-
-const questionSets = {
-
-q44: [
-  {
+  // ========== Blank question sets (you can add your content later) ==========
+  const quizSets = {
+    q44: [ {
   question: "1. olet viemässă asiakas sairaalasta kotlin, yhtäkkla huomaat ulosajaneen",
   options: [
     "a. vaati, ettă viet hänet välittömästi kotiin.",
@@ -580,11 +515,8 @@ q44: [
     "c. Pitää vain silloin, taksin valaisin on poistettu"
   ],
   correct: "a"
-}
-],
-
-q50: [
-   {
+}],
+    q50: [{
     question: "1. Kenen vastuulla on pyörätuolin huolellinen kiinnittäminen taksiin, kun asiakkaalla on mukana henkilökohtainen avustaja?",
     options: ["a. Asiakkaan","b. Taksinkuljettajan","c. Henkilökohtaisen avustajan"],
     correct: "b"
@@ -999,14 +931,8 @@ q50: [
     "c. Taksinkuljettajan tulee varmistua, että asiakas paäsee sisalle hoitolaitokseen ja myös huolehti asiakkaan ulkovaatteiden riisumisesta."
   ],
   correct: "b"
-}
-
-
-
-  
-],
-
-extra: [
+}],
+    extra: [
   
   {
     question: "1. Sinulle tulee taksiin päihtynyt asiakas, joka ei pysty kertomaan osoitettaan tai määränpäätään. Miten kuljettajan tulee toimia?",
@@ -1066,82 +992,60 @@ extra: [
 
 
 ]
+  };
 
-};
-
-// ---------------- QUIZ LOGIC ----------------
-
-let quiz = [];
-let current = 0;
-let userAnswers = [];
-
-function loadSet(setName, btn){
-  quiz = questionSets[setName];
-  current = 0;
-  userAnswers = Array(quiz.length).fill(null);
-
-  document.querySelectorAll(".set-btn").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-
-  document.querySelector(".nav-buttons").style.display = "flex";
-  loadQuestion();
-}
-
-function loadQuestion(){
-  const q = quiz[current];
-  document.getElementById("question").innerText = q.question;
-  document.getElementById("options").innerHTML = "";
-  document.getElementById("feedback").innerText = "";
-  document.getElementById("nextBtn").disabled = true;
-
-  q.options.forEach(option => {
-    const btn = document.createElement("button");
-    btn.className = "option-btn";
-    btn.innerText = option;
-    btn.onclick = () => selectAnswer(option);
-    document.getElementById("options").appendChild(btn);
-  });
-
-  document.getElementById("progress").innerText =
-    `Question ${current + 1} of ${quiz.length}`;
-}
-
-function selectAnswer(option){
-  userAnswers[current] = option;
-  document.getElementById("nextBtn").disabled = false;
-
-  const q = quiz[current];
-  const buttons = document.querySelectorAll(".option-btn");
-
-  buttons.forEach(btn => {
-    btn.disabled = true;
-    if(btn.innerText[0] === q.correct) btn.classList.add("correct");
-    if(btn.innerText === option && option[0] !== q.correct) btn.classList.add("wrong");
-  });
-
-  document.getElementById("feedback").innerText =
-    option[0] === q.correct ? "✅ Correct!" : "❌ Wrong!";
-}
-
-function nextQuestion(){
-  if(current < quiz.length - 1){
-    current++;
-    loadQuestion();
-  } else {
-    document.getElementById("question").innerText = "🎉 Quiz Completed";
-    document.getElementById("options").innerHTML = "";
-    document.getElementById("feedback").innerText = "";
-    document.querySelector(".nav-buttons").style.display = "none";
-    document.getElementById("progress").innerText = "";
+  function loadSet(setName) {
+    const container = document.querySelector('.quiz-container');
+    const set = quizSets[setName];
+    
+    if(set.length === 0) {
+      container.innerHTML = `<p>No questions added yet for <strong>${setName}</strong>. You can add them later.</p>`;
+    } else {
+      container.innerHTML = `<h2>${setName} Questions</h2><div class="options">${set.join('<br>')}</div>`;
+    }
   }
-}
 
-function prevQuestion(){
-  if(current > 0){
-    current--;
-    loadQuestion();
+  // ========== Read-Only Answers ==========
+  function showReadOnlyAnswers() {
+    const answers = [
+      "51) 350 euro",
+      "52) Liikeenne valvoja",
+      "53) Jos Paikka ei turvallinen pysahtymiselle etsin toisen paikan koska vastuullasi on asiakkaan turvallinen ajoneuvosta poistuminen",
+      "54) Kun olet mennossa kadun toiselle puolella",
+      "55) tule nousta autosta ja kysyt asiakkaalta mitenvoit autta",
+      "56) neuvoun asiakasta soittamaan kelan palvelunumeroon",
+      "57) kysyn Miten voin autta ja kerron missa suunassa ajoneuvo on ja tarvitseeko hanapua",
+      "58) pyydan lapselta hänen vanhemmin puhellinumero",
+      "60) soitan tyontajalle ja kerron tilanteesta",
+      "61) koiralla on tunnistevaljaat.",
+      "62) Hartiavyolla, lantiovyolla Ja jalkavyolla",
+      "63) pimealla autossa tulisi pita sisavalo paalla kommunikointi tilantssa",
+      "64) tillaan asiakkalle toisen taksia, jossa asiakasta on turvallisempi kuljettaa.",
+      "65) Sinun tullee puuttua asian ja keskustella asiasta osa puolten kansa ja ilmoitta asiasta oppilaitokseen.",
+      "66) sinun tulee odotta asiakkan kasnsa, kunnes avustaja saapuu paikalle.",
+      "67) sinun tulee kieltaytymaan kuljettamista.",
+      "68) pyydat jotakin soittamaan huoltajalleen ja pyytämään tata tulemaan lasten vastaan kerrostalon pihalle.",
+      "69) kylla saa, Jos kuljettaja houlehti asiakkaan sahkomopon oikeaoppisesti kiinnittamisesta ajoneuvoon.",
+      "70) sinun tulee poistua autosta ja autta matkustajaa tarvittaessa.",
+      "71) Rauhoitella hanta puhumalla hanelle rauhallisesti ja ystavallisesti.",
+      "72) huolehdu, etta………..aikana",
+      "73) teysaytat autosi…….asiakkan kyytin",
+      "74) Aina jos…….asiakkan",
+      "75) ………varmistanut",
+      "76) kuljettaja…….puheella",
+      "Imp. Bus – B",
+      "Cycle and humans",
+      "Extreme cold weather outside"
+    ];
+
+    const container = document.querySelector('.quiz-container');
+
+    container.innerHTML = `
+      <h2>Read-Only Answers</h2>
+      <div class="options">${answers.join('<br>')}</div>
+      <button class="btn back-btn" onclick="location.reload()">Back</button>
+    `;
   }
-}
 </script>
 
 </body>
