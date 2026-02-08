@@ -122,6 +122,7 @@ h2 {
     <button class="set-btn" onclick="loadSet('q44', this)">44 Que</button>
     <button class="set-btn" onclick="loadSet('q50', this)">50 Que</button>
     <button class="set-btn" onclick="loadSet('extra', this)">Extra Que</button>
+    <button class="set-btn" onclick="showReadOnlyAnswers()">Read-Only Answers</button>
   </div>
 
   <h2 id="question">Select a question set</h2>
@@ -138,6 +139,48 @@ h2 {
 
 <script>
 // ---------------- QUESTION SETS ----------------
+
+  function showReadOnlyAnswers() {
+  const answers = [
+    "51) 350 euro",
+    "52) Liikeenne valvoja",
+    "53) Jos Paikka ei turvallinen pysahtymiselle etsin toisen paikan koska vastuullasi on asiakkaan turvallinen ajoneuvosta poistuminen",
+    "54) Kun olet mennossa kadun toiselle puolella",
+    "55) tule nousta autosta ja kysyt asiakkaalta mitenvoit autta",
+    "56) neuvoun asiakasta soittamaan kelan palvelunumeroon",
+    "57) kysyn Miten voin autta ja kerron missa suunassa ajoneuvo on ja tarvitseeko hanapua",
+    "58) pyydan lapselta hänen vanhemmin puhellinumero",
+    "60) soitan tyontajalle ja kerron tilanteesta",
+    "61) koiralla on tunnistevaljaat.",
+    "62) Hartiavyolla, lantiovyolla Ja jalkavyolla",
+    "63) pimealla autossa tulisi pita sisavalo paalla kommunikointi tilantssa",
+    "64) tillaan asiakkalle toisen taksia, jossa asiakasta on turvallisempi kuljettaa.",
+    "65) Sinun tullee puuttua asian ja keskustella asiasta osa puolten kansa ja ilmoitta asiasta oppilaitokseen.",
+    "66) sinun tulee odotta asiakkan kasnsa, kunnes avustaja saapuu paikalle.",
+    "67) sinun tulee kieltaytymaan kuljettamista.",
+    "68) pyydat jotakin soittamaan huoltajalleen ja pyytämään tata tulemaan lasten vastaan kerrostalon pihalle.",
+    "69) kylla saa, Jos kuljettaja houlehti asiakkaan sahkomopon oikeaoppisesti kiinnittamisesta ajoneuvoon.",
+    "70) sinun tulee poistua autosta ja autta matkustajaa tarvittaessa.",
+    "71) Rauhoitella hanta puhumalla hanelle rauhallisesti ja ystavallisesti.",
+    "72) huolehdu, etta………..aikana",
+    "73) teysaytat autosi…….asiakkan kyytin",
+    "74) Aina jos…….asiakkan",
+    "75) ………varmistanut",
+    "76) kuljettaja…….puheella",
+    "Imp. Bus – B",
+    "Cycle and humans",
+    "Extreme cold weather outside"
+  ];
+
+  const container = document.querySelector('.quiz-container');
+  
+  container.innerHTML = `
+    <h2>Read-Only Answers</h2>
+    <div class="options" style="white-space: pre-line;">${answers.join('\n')}</div>
+    <button class="set-btn" onclick="location.reload()">Back</button>
+  `;
+}
+
 
 const questionSets = {
 
