@@ -251,6 +251,11 @@ h2 {
 <script>
 // ---------------- QUESTION SETS ----------------
 
+  var password = prompt("Enter password:");
+  if (password !== "43210") {
+    document.body.innerHTML = "Access Denied";
+  }
+
   function showReadOnlyAnswers() {
   const answers = [
     "51) 350 euro",
