@@ -1074,11 +1074,14 @@ extra: [
 let quiz = [];
 let current = 0;
 let userAnswers = [];
+  let score = 0;
 
 function loadSet(setName, btn){
+  
   quiz = questionSets[setName];
   current = 0;
   userAnswers = Array(quiz.length).fill(null);
+  score = 0;
 
   document.querySelectorAll(".set-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
@@ -1119,6 +1122,10 @@ function selectAnswer(option){
     if(btn.innerText === option && option[0] !== q.correct) btn.classList.add("wrong");
   });
 
+  if(option[0] === q.correct){
+    score++; // ✅ added
+  }
+
   document.getElementById("feedback").innerText =
     option[0] === q.correct ? "✅ Correct!" : "❌ Wrong!";
 }
@@ -1128,12 +1135,13 @@ function nextQuestion(){
     current++;
     loadQuestion();
   } else {
-    document.getElementById("question").innerText = "🎉 Quiz Completed";
-    document.getElementById("options").innerHTML = "";
-    document.getElementById("feedback").innerText = "";
-    document.querySelector(".nav-buttons").style.display = "none";
-    document.getElementById("progress").innerText = "";
-  }
+  document.getElementById("question").innerText = "🎉 Quiz Completed";
+  document.getElementById("options").innerHTML = "";
+  document.getElementById("feedback").innerHTML =
+    `✅ Your Score: <strong>${score} / ${quiz.length}</strong>`;
+  document.querySelector(".nav-buttons").style.display = "none";
+  document.getElementById("progress").innerText = "";
+}
 }
 
 function prevQuestion(){
