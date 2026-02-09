@@ -1188,7 +1188,7 @@ extra: [
 
 function loadRandomSet(btn) {
   // merge q44 + q50
-  const combined = [...questionSets.q44, ...questionSets.q50];
+  const combined = [...questionSets.q44, ...questionSets.q50, ...questionSets.extra];
 
   // shuffle questions
   const shuffled = combined.sort(() => Math.random() - 0.5);
