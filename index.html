@@ -23,14 +23,15 @@ body {
   max-width: 700px;
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
   padding: 30px;
   box-sizing: border-box;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .quiz-container:hover {
   transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* Top Buttons */
@@ -51,6 +52,7 @@ body {
   font-weight: 500;
   transition: all 0.2s;
   flex: 1 1 45%;
+  text-align: center;
 }
 
 .set-btn:hover {
@@ -66,6 +68,7 @@ h2 {
   font-size: 22px;
   margin-bottom: 20px;
   color: #333;
+  line-height: 1.4;
 }
 
 /* Options */
@@ -158,23 +161,48 @@ h2 {
   color: #555;
 }
 
-/* Mobile Adjustments */
-@media (max-width: 500px) {
+/* Responsive Adjustments for Mobile */
+@media (max-width: 768px) {
   .quiz-container {
-    padding: 20px;
-  }
-
-  .set-btn, .next-btn, .back-btn {
-    flex: 1 1 100%;
+    padding: 25px;
   }
 
   h2 {
     font-size: 20px;
   }
 
+  .set-btn, .next-btn, .back-btn {
+    flex: 1 1 48%;
+    font-size: 15px;
+  }
+
   .option-btn {
     font-size: 15px;
     padding: 12px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 15px;
+  }
+
+  .quiz-container {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .set-btn, .next-btn, .back-btn {
+    flex: 1 1 100%;
+    font-size: 14px;
+  }
+
+  .option-btn {
+    font-size: 14px;
+    padding: 10px 12px;
   }
 }
 
