@@ -123,6 +123,7 @@ h2 {
     <button class="set-btn" onclick="loadSet('q50', this)">50 Que</button>
     <button class="set-btn" onclick="loadSet('extra', this)">Extra Que</button>
     <button class="set-btn" onclick="showReadOnlyAnswers()">Read-Only Answers</button>
+    <button class="set-btn" onclick="loadRandomSet(this)">Random Que</button>
   </div>
 
   <h2 id="question">Select a question set</h2>
@@ -1068,6 +1069,30 @@ extra: [
 ]
 
 };
+
+
+function loadRandomSet(btn) {
+  // merge q44 + q50
+  const combined = [...questionSets.q44, ...questionSets.q50];
+
+  // shuffle questions
+  const shuffled = combined.sort(() => Math.random() - 0.5);
+
+  // take only 50 questions
+  quiz = shuffled.slice(0, 50);
+
+  // reset state
+  current = 0;
+  userAnswers = Array(quiz.length).fill(null);
+
+  // active button highlight
+  document.querySelectorAll(".set-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+
+  document.querySelector(".nav-buttons").style.display = "flex";
+  loadQuestion();
+}
+  
 
 // ---------------- QUIZ LOGIC ----------------
 
