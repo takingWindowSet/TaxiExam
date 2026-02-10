@@ -1219,7 +1219,7 @@ let userAnswers = [];
 
 function loadSet(setName, btn){
   
-  quiz = questionSets[setName];
+  quiz = [...questionSets[setName]].sort(() => Math.random() - 0.5);  //questionSets[setName];
   current = 0;
   userAnswers = Array(quiz.length).fill(null);
   score = 0;
