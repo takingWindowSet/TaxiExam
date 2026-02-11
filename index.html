@@ -1515,7 +1515,7 @@ let userAnswers = [];
 
 function loadSet(setName, btn){
   
-  quiz = [...questionSets[setName]].sort(() => Math.random() - 0.5);  //questionSets[setName];
+  quiz = questionSets[setName]; //[...questionSets[setName]].sort(() => Math.random() - 0.5);
   current = 0;
   userAnswers = Array(quiz.length).fill(null);
   score = 0;
