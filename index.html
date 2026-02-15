@@ -244,6 +244,7 @@ h2 {
     <button class="set-btn" onclick="showReadOnlyAnswers()">Read-Only Answers</button>
     <button class="set-btn" onclick="loadSet('ReadOnly', this)">Read-Only Answers Make a Que</button>
     <button class="set-btn" onclick="loadRandomSet(this)">Random Que(44 & 51 & Extra)</button>
+    <button class="set-btn" onclick="loadSet('que', this)">Not Verified </button>
   </div>
 
   <h2 id="question">Select a question set</h2>
@@ -1306,6 +1307,20 @@ extra: [
   correct: "a"
 }
 ],
+
+que: [
+ {
+    "question": "1. Asiakkaana on henkilö joka ei kykene kommunikoimaan kuljettajan kanssa, mitä kuljettajalta vaaditaan?",
+    "options": [
+      "a. Taksinkuljettajalta edellytetään, että asiakas pääsee oikeaan määränpäähän",
+      "b. Taksinkuljettajalta edellytetään asiakkaiden kanssa saman kielen osaamista",
+      "c. Taksinkuljettajalta edellytetään poikkeuslupaa kuljetuksen suorittamiseen"
+    ],
+    "correct": "a"
+  }
+],
+
+ 
  ReadOnly: [
   {
     "question": "1. Mikä on seuraamus, jos taksinkuljettaja rikkoo liikennemääräystä?",
@@ -1524,7 +1539,7 @@ let userAnswers = [];
 
 function loadSet(setName, btn){
   
-  quiz = [...questionSets[setName]].sort(() => Math.random() - 0.5); //questionSets[setName];
+  quiz = questionSets[setName]; //[...questionSets[setName]].sort(() => Math.random() - 0.5);
   current = 0;
   userAnswers = Array(quiz.length).fill(null);
   score = 0;
